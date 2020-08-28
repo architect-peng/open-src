@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <modules>
+        <module>open-common</module>
+        <module>open-server</module>
+    </modules>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.architect.peng</groupId>
+    <artifactId>open-src</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>open-src</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <!--集成  常用的开发工具   -->
+
+        <!--guava-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>13.0.1</version>
+        </dependency>
+
+        <!--处理常用的编码方法的工具类包-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+        <!--commons-lang3-->
+
+        <!--StringUtils – 处理String的核心类，提供了相当多的功能；-->
+        <!--NumberUtils - 类型转换（String->Long）；取最大最小值；比较大小。所有操作都不会抛出异常，如果转换不成功返回0,0.0d,0.0f等形式，转换操作也可以指定默认值。-->
+        <!--DateUtils -日期相关；是否同一天；时间+x；字符串转换成Date-->
+        <!--ArrayUtils – 用于对数组的操作，如添加、查找、删除、子数组、倒序、元素类型转换等；-->
+        <!--SystemUtils – 在java.lang.System基础上提供更方便的访问，如用户路径、Java版本、时区、操作系统等判断；-->
+        <!--SystemUtils – WordUtils – 用于处理单词大小写、换行等。-->
+        <!--StringEscapeUtils – 用于正确处理转义字符，产生正确的Java、JavaScript、HTML、XML和SQL代码；-->
+        <!--CharRange – 用于设定字符范围并做相应检查；-->
+        <!--ClassUtils – 用于对Java类的操作，不使用反射；-->
+        <!--Validate – 提供验证的操作，有点类似assert断言-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+
+
+        <!--封装了一些常用工具类方法，用于IO的各种操作-->
+
+        <!--IOUtils  提供各种静态方法，用于处理读，写和、拷贝，这些方法基于InputStream、OutputStream、Reader 和 Writer-->
+        <!--FileUtils   提供各种静态方法，基于File对象工作，包括读、写、拷贝、比较文件-->
+        <!--LineIterator 提供灵活的方式操作基于行的文件。通过FileUtils 或 IOUtils中的静态方法，可以直接创建一个实例-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <!--http 调用-->
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
