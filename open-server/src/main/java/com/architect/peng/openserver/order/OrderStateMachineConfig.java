@@ -19,7 +19,7 @@ import java.util.EnumSet;
  */
 @Configuration
 @EnableStateMachine(name = "orderStateMachine")
-public class OrderStateMachineConfig extends StateMachineConfigurerAdapter<com.architect.peng.designpatterns.state.order.OrderStatus, com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> {
+public class OrderStateMachineConfig extends StateMachineConfigurerAdapter<OrderStatus, OrderStatusChangeEvent> {
 
 
     /**
@@ -29,10 +29,10 @@ public class OrderStateMachineConfig extends StateMachineConfigurerAdapter<com.a
      * @throws Exception
      */
     @Override
-    public void configure(StateMachineStateConfigurer<com.architect.peng.designpatterns.state.order.OrderStatus, com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> states) throws Exception {
+    public void configure(StateMachineStateConfigurer<OrderStatus, OrderStatusChangeEvent> states) throws Exception {
         states.withStates()
-                .initial(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_PAYMENT)
-                .states(EnumSet.allOf(com.architect.peng.designpatterns.state.order.OrderStatus.class));
+                .initial(OrderStatus.WAIT_PAYMENT)
+                .states(EnumSet.allOf(OrderStatus.class));
     }
 
     /**
@@ -42,17 +42,17 @@ public class OrderStateMachineConfig extends StateMachineConfigurerAdapter<com.a
      * @throws Exception
      */
     @Override
-    public void configure(StateMachineTransitionConfigurer<com.architect.peng.designpatterns.state.order.OrderStatus, com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> transitions) throws Exception {
+    public void configure(StateMachineTransitionConfigurer<OrderStatus, OrderStatusChangeEvent> transitions) throws Exception {
 
         transitions
-                .withExternal().source(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_PAYMENT).target(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_DELIVERY)
-                .event(com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent.PAYED)
+                .withExternal().source(OrderStatus.WAIT_PAYMENT).target(OrderStatus.WAIT_DELIVERY)
+                .event(OrderStatusChangeEvent.PAYED)
                 .and()
-                .withExternal().source(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_DELIVERY).target(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_RECIEVE)
-                .event(com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent.DLIVERY)
+                .withExternal().source(OrderStatus.WAIT_DELIVERY).target(OrderStatus.WAIT_RECIEVE)
+                .event(OrderStatusChangeEvent.DLIVERY)
                 .and()
-                .withExternal().source(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_RECIEVE).source(com.architect.peng.designpatterns.state.order.OrderStatus.FINISH)
-                .event(com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent.RECIEVED);
+                .withExternal().source(OrderStatus.WAIT_RECIEVE).source(OrderStatus.FINISH)
+                .event(OrderStatusChangeEvent.RECIEVED);
     }
 
     @Bean

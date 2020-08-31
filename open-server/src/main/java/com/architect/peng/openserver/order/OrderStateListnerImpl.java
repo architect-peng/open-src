@@ -1,6 +1,5 @@
 package com.architect.peng.openserver.order;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.messaging.Message;
 import org.springframework.statemachine.annotation.OnTransition;
 import org.springframework.statemachine.annotation.WithStateMachine;
@@ -16,25 +15,25 @@ import org.springframework.stereotype.Component;
 public class OrderStateListnerImpl {
 
     @OnTransition(source = "WAIT_PAYMENT", target = "WAIT_DELIVERY")
-    public boolean payTransaction(Message<com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> message) {
+    public boolean payTransaction(Message<OrderStatusChangeEvent> message) {
         final Order order = (Order) message.getHeaders().get("order");
-        order.setOrderStatus(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_DELIVERY);
+        order.setOrderStatus(OrderStatus.WAIT_DELIVERY);
         System.out.println("支付状态机返回信息" + message.getHeaders().toString());
         return true;
     }
 
     @OnTransition(source = "WAIT_DELIVERY", target = "WAIT_RECIEVE")
-    public boolean deliveryTransaction(Message<com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> message) {
+    public boolean deliveryTransaction(Message<OrderStatusChangeEvent> message) {
         final Order order = (Order) message.getHeaders().get("order");
-        order.setOrderStatus(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_RECIEVE);
+        order.setOrderStatus(OrderStatus.WAIT_RECIEVE);
         System.out.println("支付状态机返回信息" + message.getHeaders().toString());
         return true;
     }
 
     @OnTransition(source = "WAIT_RECIEVE", target = "FINISH")
-    public boolean recieveTransaction(Message<com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> message) {
+    public boolean recieveTransaction(Message<OrderStatusChangeEvent> message) {
         final Order order = (Order) message.getHeaders().get("order");
-        order.setOrderStatus(com.architect.peng.designpatterns.state.order.OrderStatus.FINISH);
+        order.setOrderStatus(OrderStatus.FINISH);
         System.out.println("支付状态机返回信息" + message.getHeaders().toString());
         return true;
     }

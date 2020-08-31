@@ -18,10 +18,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class OrderServiceImpl implements IOderService {
     @Autowired
-    private StateMachine<com.architect.peng.designpatterns.state.order.OrderStatus, com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> orderStateMachine;
+    private StateMachine<OrderStatus, OrderStatusChangeEvent> orderStateMachine;
 
     @Autowired
-    private StateMachinePersister<com.architect.peng.designpatterns.state.order.OrderStatus, com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent, Order> persister;
+    private StateMachinePersister<OrderStatus, OrderStatusChangeEvent, Order> persister;
 
     private int id = 1;
     private Map<Integer, Order> orderDB = new ConcurrentHashMap<>();
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements IOderService {
     public Order create() {
         Order order = new Order();
 
-        order.setOrderStatus(com.architect.peng.designpatterns.state.order.OrderStatus.WAIT_PAYMENT);
+        order.setOrderStatus(OrderStatus.WAIT_PAYMENT);
         order.setId(id++);
         orderDB.put(order.getId(), order);
         return order;
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements IOderService {
         final Order order = orderDB.get(id);
         System.out.println("线程名称" + Thread.currentThread().getName() + "尝试支付订单号:" + id);
 
-        Message message = MessageBuilder.withPayload(com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent.PAYED).setHeader("order", order).build();
+        Message message = MessageBuilder.withPayload(OrderStatusChangeEvent.PAYED).setHeader("order", order).build();
         if(!sendEvent(message,order)){
             System.out.println("线程名称" + Thread.currentThread().getName() + "支付失败，状态异常，订单号:" + id);
 
@@ -49,7 +49,7 @@ public class OrderServiceImpl implements IOderService {
         return order;
     }
 
-    private synchronized boolean sendEvent(Message<com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent> message, Order order) {
+    private synchronized boolean sendEvent(Message<OrderStatusChangeEvent> message, Order order) {
         boolean result = false;
         try {
             orderStateMachine.start();
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements IOderService {
         final Order order = orderDB.get(id);
         System.out.println("线程名称" + Thread.currentThread().getName() + "尝试发货，订单号:" + id);
 
-        Message message = MessageBuilder.withPayload(com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent.DLIVERY).setHeader("order", order).build();
+        Message message = MessageBuilder.withPayload(OrderStatusChangeEvent.DLIVERY).setHeader("order", order).build();
         if(!sendEvent(message,order)){
             System.out.println("线程名称" + Thread.currentThread().getName() + "发货失败，状态异常，订单号:" + id);
 
@@ -85,7 +85,7 @@ public class OrderServiceImpl implements IOderService {
         final Order order = orderDB.get(id);
         System.out.println("线程名称" + Thread.currentThread().getName() + "尝试收货，订单号:" + id);
 
-        Message message = MessageBuilder.withPayload(com.architect.peng.designpatterns.state.order.OrderStatusChangeEvent.DLIVERY).setHeader("order", order).build();
+        Message message = MessageBuilder.withPayload(OrderStatusChangeEvent.DLIVERY).setHeader("order", order).build();
         if(!sendEvent(message,order)){
             System.out.println("线程名称" + Thread.currentThread().getName() + "收货失败，状态异常，订单号:" + id);
 

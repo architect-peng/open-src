@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 public class Order {
     private int id;
-    private com.architect.peng.designpatterns.state.order.OrderStatus orderStatus;
+    private OrderStatus orderStatus;
 
  }
